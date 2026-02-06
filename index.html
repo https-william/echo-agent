@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHO OS | NEURAL INTERFACE 🌚</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script> <!-- Placeholder for icons -->
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="glow-sphere s1"></div>
+    <div class="glow-sphere s2"></div>
+    
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">🌚</div>
+                <div class="logo-text">
+                    <h1>ECHO</h1>
+                    <span>OS v2.1.0</span>
+                </div>
+            </div>
+            
+            <div class="nav-container">
+                <div class="nav-section">
+                    <div class="nav-label">CHAT</div>
+                    <div class="nav-item active">
+                        <span class="icon">💬</span>
+                        <span class="text">Chat</span>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-label">CONTROL</div>
+                    <div class="nav-item">
+                        <span class="icon">📊</span>
+                        <span class="text">Overview</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="icon">🔗</span>
+                        <span class="text">Channels</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="icon">🛰️</span>
+                        <span class="text">Instances</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="icon">📄</span>
+                        <span class="text">Sessions</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="icon">⏰</span>
+                        <span class="text">Cron Jobs</span>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-label">AGENT</div>
+                    <div class="nav-item">
+                        <span class="icon">⚡</span>
+                        <span class="text">Skills</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="icon">🖥️</span>
+                        <span class="text">Nodes</span>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-label">SETTINGS</div>
+                    <div class="nav-item">
+                        <span class="icon">⚙️</span>
+                        <span class="text">Config</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="icon">🪲</span>
+                        <span class="text">Debug</span>
+                    </div>
+                    <div class="nav-item">
+                        <span class="icon">📋</span>
+                        <span class="text">Logs</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="system-stats">
+                <div class="mini-stat">
+                    <span>HOST</span>
+                    <span id="host-os" class="val">--</span>
+                </div>
+                <div class="mini-stat">
+                    <span>RAM FREE</span>
+                    <span id="ram-val" class="val">--</span>
+                </div>
+                <div class="mini-stat">
+                    <span>LATENCY</span>
+                    <span id="latency-val" class="val">--</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            <header class="top-bar">
+                <div class="session-info">
+                    <span class="pulse"></span>
+                    <span id="current-op">NEURAL_OVERDRIVE_ACTIVE</span>
+                </div>
+                <div id="sync-timer">LAST SYNC: --</div>
+            </header>
+
+            <section class="hero-stats">
+                <div class="main-earnings">
+                    <div class="label">CUMULATIVE EARNINGS</div>
+                    <div class="value-row">
+                        <span class="currency">$</span>
+                        <span id="fund-val">0.00</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="track-info">
+                            <span>REVENUE GOAL</span>
+                            <span>$10,000.00</span>
+                        </div>
+                        <div class="bar-container">
+                            <div id="main-progress" class="bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="secondary-stats">
+                    <div class="stat-box">
+                        <div class="label">SYSTEM EFFICIENCY</div>
+                        <div class="box-val"><span id="efficiency-val">0</span><span class="unit">%</span></div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="label">CURRENT TASK</div>
+                        <div id="task-text" class="box-desc">ANALYZING MISSION VECTORS...</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="grid-layout">
+                <section class="milestone-card">
+                    <div class="card-header">MISSION MILESTONES</div>
+                    <div id="milestone-list" class="milestone-grid">
+                        <!-- Milestones injected here -->
+                    </div>
+                </section>
+
+                <section class="terminal-section">
+                    <div class="terminal-header">
+                        <div class="term-dots"><span></span><span></span><span></span></div>
+                        <div class="term-title">CORE_LOGS.EXE</div>
+                    </div>
+                    <div class="terminal-body">
+                        <ul id="log-list">
+                            <!-- Logs -->
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
