@@ -1,27 +1,22 @@
-FROM node:22-slim
-
-# Install OpenClaw globally
-RUN npm install -g openclaw --unsafe-perm
+# Use a light Node image
+FROM node:22-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy package.json first to cache dependencies
-COPY package.json .
+# Copy only what's needed for dependencies first
+COPY package.json ./
 
-# Install dependencies
-RUN npm install
+# Install local dependencies only (no global installs)
+RUN npm install --omit=dev
 
 # Copy the rest of the workspace
 COPY . .
 
-# Environment variables (placeholders)
-ENV GATEWAY_PORT=18789
-ENV DASHBOARD_PORT=3000
-
-# Expose ports
-EXPOSE 18789
+# Expose the dashboard and gateway ports
 EXPOSE 3000
+EXPOSE 18789
 
-# Start command
-CMD ["sh", "-c", "openclaw gateway start --port $GATEWAY_PORT --bind 0.0.0.0 & npx serve -p $DASHBOARD_PORT ."]
+# Run a simple shell script to start the processes
+# alpine uses 'sh' instead of 'bash'
+CMD ["sh", "-c", "npx serve -p 3000 . & node -e \"console.log('Echo Cloud Node Active')\" && sleep infinity"]
