@@ -1,13 +1,14 @@
-# Use a stable Node image
-FROM node:22-alpine
+# Use a stable Debian-based Node image (more compatible than Alpine)
+FROM node:22-bookworm-slim
 
-# Install ALL build tools (Overkill Mode)
-RUN apk add --no-cache \
+# Install required build tools
+RUN apt-get update && apt-get install -y \
     git \
     python3 \
     make \
     g++ \
-    build-base
+    cmake \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
@@ -15,8 +16,8 @@ WORKDIR /app
 # Copy package.json
 COPY package.json ./
 
-# Install local dependencies
-RUN npm install --omit=dev
+# Install dependencies (skipping optional native builds to save time/memory)
+RUN npm install --omit=dev --ignore-scripts
 
 # Copy the rest of the workspace
 COPY . .
@@ -25,5 +26,5 @@ COPY . .
 EXPOSE 3000
 EXPOSE 18789
 
-# Start command (more robust sequence)
-CMD ["sh", "-c", "npx serve -p 3000 . & node -e \"console.log('Echo Cloud: Overkill Mode Active')\" && sleep infinity"]
+# Start command
+CMD ["sh", "-c", "npx serve -p 3000 . & node -e \"console.log('Echo Cloud: Debian Mode Active')\" && sleep infinity"]
