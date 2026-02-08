@@ -1,3 +1,4 @@
+// Updated Dashboard Logic for Cloud Sync
 async function updateDashboard() {
     try {
         const response = await fetch('./status.json?t=' + Date.now());
@@ -12,8 +13,8 @@ async function updateDashboard() {
         document.getElementById('efficiency-val').textContent = Math.floor(data.efficiency);
         
         // System Sidebar
-        document.getElementById('host-os').textContent = data.host_stats ? data.host_stats.os : 'WIN-PC';
-        document.getElementById('ram-val').textContent = data.host_stats ? data.host_stats.ram_free : '--';
+        document.getElementById('host-os').textContent = data.host_stats ? data.host_stats.os : 'RENDER-CLOUD';
+        document.getElementById('ram-val').textContent = data.host_stats ? data.host_stats.ram_free : '512MB';
         document.getElementById('latency-val').textContent = data.latency;
 
         // Progress Bar
@@ -21,22 +22,26 @@ async function updateDashboard() {
         
         // Update Milestones
         const milestoneList = document.getElementById('milestone-list');
-        milestoneList.innerHTML = '';
-        data.milestones.forEach(m => {
-            const div = document.createElement('div');
-            div.className = `milestone-item ${m.status === 'done' ? 'done' : ''}`;
-            div.innerHTML = `<div class="dot"></div><span>${m.name.toUpperCase()}</span>`;
-            milestoneList.appendChild(div);
-        });
+        if (milestoneList && data.milestones) {
+            milestoneList.innerHTML = '';
+            data.milestones.forEach(m => {
+                const div = document.createElement('div');
+                div.className = `milestone-item ${m.status === 'done' ? 'done' : ''}`;
+                div.innerHTML = `<div class="dot"></div><span>${m.name.toUpperCase()}</span>`;
+                milestoneList.appendChild(div);
+            });
+        }
 
         // Update Logs
         const logList = document.getElementById('log-list');
-        logList.innerHTML = '';
-        data.recent_logs.slice().reverse().forEach((log, index) => {
-            const li = document.createElement('li');
-            li.textContent = `[ECHO::SYS] ${log}`;
-            logList.appendChild(li);
-        });
+        if (logList && data.recent_logs) {
+            logList.innerHTML = '';
+            data.recent_logs.slice().reverse().forEach((log, index) => {
+                const li = document.createElement('li');
+                li.textContent = `[ECHO::SYS] ${log}`;
+                logList.appendChild(li);
+            });
+        }
 
         document.getElementById('sync-timer').textContent = `LAST SYNC: ${new Date().toLocaleTimeString()}`;
 
@@ -45,14 +50,24 @@ async function updateDashboard() {
     }
 }
 
-// Navigation logic (simple placeholder)
+// Fixed Navigation Logic
 document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', () => {
-        document.querySelector('.nav-item.active').classList.remove('active');
+        const activeItem = document.querySelector('.nav-item.active');
+        if (activeItem) activeItem.classList.remove('active');
         item.classList.add('active');
-        console.log(`Navigating to: ${item.querySelector('.text').textContent}`);
+        const section = item.querySelector('.text').textContent;
+        console.log(`Navigating to: ${section}`);
+        
+        // Simple View Switching logic
+        if (section === 'DASHBOARD') {
+            document.querySelector('.main-content').style.opacity = '1';
+        } else {
+            // Placeholder for other views
+            alert(`${section} module coming soon in Midnight Build!`);
+        }
     });
 });
 
-setInterval(updateDashboard, 3000);
+setInterval(updateDashboard, 5000); // 5s for cloud stability
 updateDashboard();
