@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Echo Agent Workspace",
   "main": "app.js",
+  "scripts": {
+    "start": "npx serve -p 10000 ."
+  },
   "dependencies": {
     "openclaw": "latest"
   }
